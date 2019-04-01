@@ -37,10 +37,12 @@ set foldmethod=indent
 set foldlevel=100
 nnoremap <space> za
 
+set wildchar=<Tab>
 set wildmenu
+set wildmode=list
+
 set incsearch
 set hlsearch
-
 
 "set guifont=
 
@@ -51,13 +53,6 @@ endif
 
 " Don't go past 90 columns
 match ColorColumn '\%>90v.\+'
-
-autocmd FileType python call PYshortcuts()
-function PYshortcuts()
-    inoremap ret return
-    inoremap imp import<space>
-    inoremap pri print<space>
-endfunction
 
 " Hybrid numbering depending on if you are in insert or normal mode
 set number relativenumber
@@ -111,3 +106,7 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+autocmd FileType python call PYshortcuts()
+function PYshortcuts()
+    
+endfunction
