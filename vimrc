@@ -51,6 +51,12 @@ if &listchars ==# 'eol:$'
       set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
+if !exists(":DiffOrig")
+    command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+				    \ | wincmd p | diffthis
+    nnoremap :DO :DiffOrig
+endif
+
 " Don't go past 90 columns
 match ColorColumn '\%>90v.\+'
 
