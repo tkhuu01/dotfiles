@@ -61,12 +61,14 @@ endif
 match ColorColumn '\%>90v.\+'
 
 " Hybrid numbering depending on if you are in insert or normal mode
-set number relativenumber
-augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+if exists('+relativenumber')
+    set number relativenumber
+    augroup numbertoggle
+        autocmd!
+        autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+        autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+    augroup END
+endif
 
 " Remember where cursor is left when closing file
 if has("autocmd")
