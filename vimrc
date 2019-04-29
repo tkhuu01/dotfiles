@@ -18,11 +18,18 @@ syntax on
 
 let mapleader=","
 
+" -------------------------------
+" Tags
+" -------------------------------
+"set tags+=~/vim-tags/llvm7.0_tags
+
+
 colorscheme desert
 
-set nu
-set showmatch
 set list
+set nu
+set showcmd
+set showmatch
 
 set tabstop=4
 set smarttab
@@ -70,7 +77,7 @@ if exists('+relativenumber')
     augroup END
 endif
 
-" Remember where cursor is left when closing file
+" Remember where cursor is when closing file
 if has("autocmd")
     au BufReadPost * if line("'\"") > 1 &&
                       \ line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -113,6 +120,9 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+
+" For tags, list all definitions instead
+nn <C-]> g<C-]>
 
 autocmd FileType python call PYshortcuts()
 function PYshortcuts()
