@@ -19,9 +19,10 @@ cfind() {
 
 ##################################################
 #  Generates ctag file and will place the file in
-#  in ~/vim-tags/ if the directory already exists
+#  ~/vim-tags/ if the directory already exists
 #  or if it doesn't exist the directory will be
-#  created.
+#  created. Also will append the tag at the end
+#  of the vimrc file.
 #
 # args:
 #   $1 - name of tag file
@@ -30,14 +31,11 @@ cfind() {
 genCTags() {
     if type ctags > /dev/null; then
         ctags -f "$1" -R "$2"
-        if [ -d ~/vim-tags/ ]; then
-            mv "$1" ~/vim-tags/
-            echo "set tags+=~/vim-tags/$1" >> ~/.vimrc
-        else
+        if [ ! -d ~/vim-tags/ ]; then
             mkdir ~/vim-tags/
-            mv "$1" ~/vim-tags/
-            echo "set tags+=~/vim-tags/$1" >> ~/.vimrc
         fi
+        mv "$1" ~/vim-tags/
+        echo "set tags+=~/vim-tags/$1" >> ~/.vimrc
     else
         echo "ctags doesn't exist"
     fi
