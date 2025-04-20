@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -e
+
+CONFIG="install.conf.yaml"
+DOTBOT_DIR="dotbot"
+
+DOTBOT_BIN="bin/dotbot"
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cd "${BASEDIR}"
+git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
+git submodule update --init --recursive "${DOTBOT_DIR}"
+
+"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+
+# neovim
+cd /tmp
+wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.tar.gz
+tar -xvf nvim-linux-x86_64.tar.gz
+sudo cp nvim-linux-x86_64/bin/nvim /usr/bin/
+sudo cp -r nvim-linux-x86_64/share/nvim/runtime /usr/share/nvim/
+echo "alias vi='nvim'" >> ~/.bashrc
+
+# pyenv
+curl -fsSL https://pyenv.run | bash
+
+# pod debugging
+echo "## KoolKits - Shorthand
+kk() {
+    kubectl debug -it $1 --image=lightruncom/koolkits:$2 --image-pull-policy=Never --target=$3
+}" >> ~/.bashrc
+source ~/.bashrc
