@@ -1,6 +1,10 @@
 - link:
-    ~/.tmux.conf: tmux.conf
-    ~/.config/nvim/init.vim: init.vim
+    ~/.tmux.conf: 
+      force: true
+      path: tmux.conf
+    ~/.config/nvim/init.vim:
+      force: true
+      path: init.vim
 
 - create:
     - ~/projects
