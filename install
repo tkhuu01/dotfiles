@@ -22,8 +22,8 @@ sudo cp nvim-linux-x86_64/bin/nvim /usr/bin/
 sudo cp -r nvim-linux-x86_64/share/nvim/runtime /usr/share/nvim/
 echo "alias vi='nvim'" >> ~/.bashrc
 
-# pyenv
-curl -fsSL https://pyenv.run | bash
+# version manager
+curl https://mise.run | sh
 
 # pod debugging
 echo "## KoolKits - Shorthand
