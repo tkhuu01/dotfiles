@@ -17,9 +17,7 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 # neovim
 cd /tmp
 wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.tar.gz
-tar -xvf nvim-linux-x86_64.tar.gz > /dev/null
-sudo cp nvim-linux-x86_64/bin/nvim /usr/bin/
-sudo cp -r nvim-linux-x86_64/share/nvim/runtime /usr/share/nvim/
+sudo cp -r nvim-linux-x86_64/* /usr/local/
 echo "alias vi='nvim'" >> ~/.bashrc
 
 # version manager

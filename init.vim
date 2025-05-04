@@ -13,7 +13,7 @@ Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
 Plug 'folke/trouble.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'ThePrimeagen/harpoon'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
 set nocompatible
 filetype off
@@ -271,53 +271,6 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 let g:rooter_paterns = ['.git']
 
-" set to 1, nvim will open the preview window after entering the Markdown buffer
-" default: 0
-let g:mkdp_auto_start = 0
-
-" set to 1, the nvim will auto close current preview window when changing
-" from Markdown buffer to another buffer
-" default: 1
-let g:mkdp_auto_close = 1
-
-" set to 1, Vim will refresh Markdown when saving the buffer or
-" when leaving insert mode. Default 0 is auto-refresh Markdown as you edit or
-" move the cursor
-" default: 0
-let g:mkdp_refresh_slow = 0
-
-" set to 1, the MarkdownPreview command can be used for all files,
-" by default it can be use in Markdown files only
-" default: 0
-let g:mkdp_command_for_global = 0
-
-" set to 1, the preview server is available to others in your network.
-" By default, the server listens on localhost (127.0.0.1)
-" default: 0
-let g:mkdp_open_to_the_world = 0
-
-" use custom IP to open preview page.
-" Useful when you work in remote Vim and preview on local browser.
-" For more details see: https://github.com/iamcco/markdown-preview.nvim/pull/9
-" default empty
-let g:mkdp_open_ip = ''
-
-" specify browser to open preview page
-" for path with space
-" valid: `/path/with\ space/xxx`
-" invalid: `/path/with\\ space/xxx`
-" default: ''
-let g:mkdp_browser = ''
-
-" set to 1, echo preview page URL in command line when opening preview page
-" default is 0
-let g:mkdp_echo_preview_url = 0
-
-" a custom Vim function name to open preview page
-" this function will receive URL as param
-" default is empty
-let g:mkdp_browserfunc = ''
-
 " options for Markdown rendering
 " mkit: markdown-it options for rendering
 " katex: KaTeX options for math
@@ -372,22 +325,3 @@ let g:mkdp_filetypes = ['markdown']
 " set default theme (dark or light)
 " By default the theme is defined according to the preferences of the system
 let g:mkdp_theme = 'dark'
-
-" combine preview window
-" default: 0
-" if enable it will reuse previous opened preview window when you preview markdown file.
-" ensure to set let g:mkdp_auto_close = 0 if you have enable this option
-let g:mkdp_combine_preview = 0
-
-" auto refetch combine preview contents when change markdown buffer
-" only when g:mkdp_combine_preview is 1
-let g:mkdp_combine_preview_auto_refresh = 1
-" normal/insert
-"<Plug>MarkdownPreview
-"<Plug>MarkdownPreviewStop
-"<Plug>MarkdownPreviewToggle
-"
-"" example
-"nmap <C-s> <Plug>MarkdownPreview
-"nmap <M-s> <Plug>MarkdownPreviewStop
-"nmap <C-p> <Plug>MarkdownPreviewToggle
