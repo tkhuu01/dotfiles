@@ -14,6 +14,7 @@ Plug 'folke/trouble.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'ThePrimeagen/harpoon'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'tpope/vim-fugitive'
 call plug#end()
 set nocompatible
 filetype off
