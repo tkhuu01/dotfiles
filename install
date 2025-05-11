@@ -22,6 +22,7 @@ echo "alias vi='nvim'" >> ~/.bashrc
 
 # version manager
 curl https://mise.run | sh
+echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
 
 # tmux plugin setup
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
