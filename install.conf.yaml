@@ -5,6 +5,9 @@
     ~/.config/nvim/init.vim:
       force: true
       path: init.vim
+    ~/.config/mise/config.toml:
+      force: true
+      path: mise.toml
 
 - create:
     - ~/projects

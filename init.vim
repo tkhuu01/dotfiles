@@ -15,6 +15,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'ThePrimeagen/harpoon'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'tpope/vim-fugitive'
+Plug 'mason-org/mason.nvim'
 call plug#end()
 set nocompatible
 filetype off
@@ -23,6 +24,7 @@ filetype plugin indent on
 
 syntax on
 lua << EOF
+require("mason").setup()
 require'lspconfig'.pyright.setup{
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
@@ -35,7 +37,6 @@ require'lspconfig'.pyright.setup{
           autoSearchPaths = true,
           diagnosticMode = "openFilesOnly",
           useLibraryCodeForTypes = true,
-          include = {},
         }
       }
     },
@@ -162,7 +163,13 @@ require("nvim-treesitter.configs").setup {
 
 -- Load the colorscheme
 --require('nord').set()
-
+vim.diagnostic.config({
+  virtual_text = true,   -- Show inline diagnostics as virtual text
+  signs = true,          -- Show diagnostics in the sign column (optional)
+  underline = true,      -- Underline text with errors/warnings (optional)
+  update_in_insert = false, -- Avoid updating diagnostics while typing
+  severity_sort = true,  -- Sort by severity (optional)
+})
 EOF
 let mapleader=","
 
