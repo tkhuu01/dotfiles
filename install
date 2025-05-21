@@ -24,6 +24,13 @@ else
     echo "Neovim already installed"
 fi
 
+# For telescope nvim
+if ! command -v rg &> /dev/null; then
+    sudo apt install ripgrep
+else
+    echo "ripgrep already installed"
+fi
+
 # version manager
 if ! command -v mise &> /dev/null; then
     curl https://mise.run | sh
