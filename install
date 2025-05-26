@@ -2,6 +2,15 @@
 
 set -ex
 
+# version manager
+if ! command -v mise &> /dev/null; then
+    curl https://mise.run | sh
+    echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+else
+    echo "Mise already installed"
+fi
+mise install
+
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
 
@@ -31,14 +40,6 @@ else
     echo "ripgrep already installed"
 fi
 
-# version manager
-if ! command -v mise &> /dev/null; then
-    curl https://mise.run | sh
-    echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
-else
-    echo "Mise already installed"
-fi
-
 # tmux plugin setup
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -47,4 +48,3 @@ else
 fi
 
 source ~/.bashrc
-mise install

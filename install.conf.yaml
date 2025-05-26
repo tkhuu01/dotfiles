@@ -2,9 +2,9 @@
     ~/.tmux.conf: 
       force: true
       path: tmux.conf
-    ~/.config/nvim/init.vim:
+    ~/.config/nvim/init.lua:
       force: true
-      path: init.vim
+      path: init.lua
     ~/.config/mise/config.toml:
       force: true
       path: mise.toml
