@@ -1,10 +1,13 @@
 - link:
-    ~/.tmux.conf: 
+    ~/.tmux.conf:
       force: true
       path: tmux.conf
     ~/.config/nvim/init.lua:
       force: true
-      path: init.lua
+      path: nvim/init.lua
+    ~/.config/nvim/lua:
+      force: true
+      path: nvim/lua
     ~/.config/mise/config.toml:
       force: true
       path: mise.toml
