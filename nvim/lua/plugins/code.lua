@@ -1,15 +1,3 @@
-require('mason').setup()
-require'lspconfig'.pyright.setup{
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          diagnosticMode = "openFilesOnly",
-          useLibraryCodeForTypes = true,
-        }
-      }
-    }
-}
 vim.diagnostic.config({
   virtual_text = true,      -- Show inline diagnostics as virtual text
   signs = true,             -- Show diagnostics in the sign column (optional)

@@ -1,3 +1,8 @@
+-- Globals
+----------------------------------------------------------------------
+vim.g.mapleader = ','
+vim.g.maplocalleader = ','
+
 -- Options
 ----------------------------------------------------------------------
 vim.opt.list = true
@@ -50,6 +55,12 @@ vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 
+-- telescope
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
+vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
+
 if vim.fn.exists(':DiffOrig') == 0 then
     vim.api.nvim_create_user_command('DiffOrig', function()
         vim.cmd [[vert new | setlocal buftype=nofile | read # | 0delete_ | diffthis | wincmd p | diffthis]]
@@ -86,4 +97,3 @@ vim.api.nvim_create_autocmd('BufReadPost', {
         end
     end,
 })
-
