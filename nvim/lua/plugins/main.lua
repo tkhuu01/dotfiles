@@ -48,20 +48,4 @@ require('lazy').setup({
         { 'echasnovski/mini.nvim', version = false }
     },
 })
-require('tokyonight').setup({
-    style = 'night',           -- Options: 'storm', 'moon', 'night', 'day'
-    transparent = false,       -- Enable/disable background
-    terminal_colors = true,    -- Set terminal colors
-    styles = {
-        comments = { italic = true },
-        keywords = { italic = true },
-        functions = {},
-        variables = {},
-        sidebars = 'dark',     -- 'dark', 'transparent', 'normal'
-        floats = 'dark',
-    },
-    sidebars = { 'qf', 'help' }, -- Set sidebar windows
-    on_colors = function(colors) end,
-    on_highlights = function(highlights, colors) end,
-})
 vim.cmd.colorscheme('tokyonight-night')
