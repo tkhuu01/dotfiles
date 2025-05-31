@@ -23,21 +23,9 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 
-# neovim
-if ! command -v nvim &> /dev/null; then
-    cd /tmp
-    wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.tar.gz
-    sudo cp -r nvim-linux-x86_64/* /usr/local/
+# neovim alias
+if ! grep -Fxq "alias vi='nvim'" ~/.bashrc; then
     echo "alias vi='nvim'" >> ~/.bashrc
-else
-    echo "Neovim already installed"
-fi
-
-# For telescope nvim
-if ! command -v rg &> /dev/null; then
-    sudo apt install ripgrep
-else
-    echo "ripgrep already installed"
 fi
 
 # tmux plugin setup
@@ -46,5 +34,3 @@ if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
 else
     echo "TPM already installed"
 fi
-
-source ~/.bashrc
