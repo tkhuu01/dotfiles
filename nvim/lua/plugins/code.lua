@@ -1,3 +1,6 @@
+require('mini.completion').setup()
+require('mini.icons').setup()
+require('mini.snippets').setup()
 vim.diagnostic.config({
   virtual_text = true,      -- Show inline diagnostics as virtual text
   signs = true,             -- Show diagnostics in the sign column (optional)
