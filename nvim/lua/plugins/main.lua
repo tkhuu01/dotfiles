@@ -33,7 +33,12 @@ require('lazy').setup({
             },
         },
         { 'nvim-lualine/lualine.nvim' },
-        { 'nvim-telescope/telescope.nvim' },
+        {
+            'nvim-telescope/telescope-project.nvim',
+            dependencies = {
+                'nvim-telescope/telescope.nvim',
+            },
+        },
         {
             'nvim-treesitter/nvim-treesitter',
             opts = {
