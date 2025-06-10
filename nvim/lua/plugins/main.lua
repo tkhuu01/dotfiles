@@ -9,7 +9,11 @@ require('lazy').setup({
             'folke/tokyonight.nvim',
             lazy = false,
             priority = 1000,
-            opts = {},
+            opts = {
+                on_highlights = function(hl, c)
+                    hl.WinSeparator = { fg = c.red }
+                end,
+            },
         },
         { 'folke/trouble.nvim' },
         {
