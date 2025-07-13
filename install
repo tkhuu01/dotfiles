@@ -9,6 +9,8 @@ if ! command -v mise &> /dev/null; then
 else
     echo "Mise already installed"
 fi
+# mise can't seem to figure out the dependency ordering
+mise use -g python@3.11.12 && mise use -g node@24.0.0 && mise use -g cosign@latest
 mise install
 
 CONFIG="install.conf.yaml"

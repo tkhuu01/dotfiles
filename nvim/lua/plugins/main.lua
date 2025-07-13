@@ -10,8 +10,11 @@ require('lazy').setup({
             lazy = false,
             priority = 1000,
             opts = {
-                on_highlights = function(hl, c)
-                    hl.WinSeparator = { fg = c.red }
+                on_highlights = function(hl, colors)
+                    hl.WinSeparator = { fg = colors.red }
+                    hl.LineNrAbove = { fg = colors.white, bold = true }
+                    hl.LineNr = { fg = colors.white, bold = true }
+                    hl.LineNrBelow = { fg = colors.white, bold = true }
                 end,
             },
         },
@@ -54,7 +57,63 @@ require('lazy').setup({
         { 'ThePrimeagen/harpoon' },
 
         -- Trying out
-        { 'echasnovski/mini.nvim', version = false }
+        { 'echasnovski/mini.nvim', version = false },
+        { 'folke/snacks.nvim', 
+            priority = 1000,
+            lazy = false,
+            ---@type snacks.Config
+            opts = {
+                input = { enabled = true },
+                lazygit = { enabled = true },
+                picker = { enabled = true },
+            },
+            matchers = {
+                frecency = true,
+            },
+            keys = {
+                { '<leader>lg', function() Snacks.lazygit.open() end, desc = 'Open Lazygit' },
+                { '<leader><space>', function() Snacks.picker.smart() end, desc = 'Smart Find Files' },
+                { '<leader>gs', function() Snacks.picker.git_status() end, desc = 'Git Status' },
+                { '<leader>fp', function() Snacks.picker.projects() end, desc = 'Projects' },
+                { '<leader>sB', function() Snacks.picker.grep_buffers() end, desc = 'Grep Open Buffers' },
+                { '<leader>/', function() Snacks.picker.grep() end, desc = 'Grep' },
+            }
+        }
+    }
+})
+require('lualine').setup({
+  options = {
+    icons_enabled = true,
+    theme = 'tokyonight-night',
+    component_separators = '',
+    section_separators = '',
+    disabled_filetypes = {},
+    always_divide_middle = true,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  --tabline = {},
+  --extensions = {}
+})
+require('bufferline').setup({
+    options = {
+        numbers = function(opts)
+            return string.format('%s',opts.id)
+        end,
     },
 })
 vim.cmd.colorscheme('tokyonight-night')
