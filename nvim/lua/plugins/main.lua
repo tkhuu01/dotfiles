@@ -48,10 +48,15 @@ require("lazy").setup({
         },
         {
             "nvim-treesitter/nvim-treesitter",
-            opts = {
-                build = ":TSUpdate",
-                ensure_installed = { "lua", "python", "typescript" }
-            }
+            build = ":TSUpdate",
+            config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = { "lua", "python", "typescript", "tsx" },
+                auto_install = true,
+                highlight = { enable = true },
+                indent = { enable = true },
+            })
+            end,
         },
         { "tpope/vim-fugitive" },
         { "ThePrimeagen/harpoon" },
