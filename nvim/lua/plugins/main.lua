@@ -1,12 +1,12 @@
 -- Plugin installations
-require('lazy').setup({
+require("lazy").setup({
     spec = {
-        { 'nvim-lua/plenary.nvim' },
+        { "nvim-lua/plenary.nvim" },
 
-        { 'airblade/vim-rooter' },
-        { 'akinsho/bufferline.nvim' },
+        { "airblade/vim-rooter" },
+        { "akinsho/bufferline.nvim" },
         {
-            'folke/tokyonight.nvim',
+            "folke/tokyonight.nvim",
             lazy = false,
             priority = 1000,
             opts = {
@@ -18,47 +18,47 @@ require('lazy').setup({
                 end,
             },
         },
-        { 'folke/trouble.nvim' },
+        { "folke/trouble.nvim" },
         {
-            'iamcco/markdown-preview.nvim',
-            cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-            build = 'cd app && npm install',
+            "iamcco/markdown-preview.nvim",
+            cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+            build = "cd app && npm install",
             init = function()
-                vim.g.mkdp_filetypes = { 'markdown' }
+                vim.g.mkdp_filetypes = { "markdown" }
             end,
-            ft = { 'markdown' },
+            ft = { "markdown" },
         },
-        { 'kyazdani42/nvim-web-devicons' },
+        { "kyazdani42/nvim-web-devicons" },
         {
-            'mason-org/mason-lspconfig.nvim',
+            "mason-org/mason-lspconfig.nvim",
             opts = {
-                ensure_installed = { 'pyright', 'ts_ls' }
+                ensure_installed = { "pyright", "ts_ls" }
             },
             dependencies = {
-                { 'mason-org/mason.nvim', opts = {} },
-                'neovim/nvim-lspconfig',
+                { "mason-org/mason.nvim", opts = {} },
+                "neovim/nvim-lspconfig",
             },
         },
-        { 'nvim-lualine/lualine.nvim' },
+        { "nvim-lualine/lualine.nvim" },
         {
-            'nvim-telescope/telescope-project.nvim',
+            "nvim-telescope/telescope-project.nvim",
             dependencies = {
-                'nvim-telescope/telescope.nvim',
+                "nvim-telescope/telescope.nvim",
             },
         },
         {
-            'nvim-treesitter/nvim-treesitter',
+            "nvim-treesitter/nvim-treesitter",
             opts = {
-                build = ':TSUpdate',
-                ensure_installed = { 'lua', 'python', 'typescript' }
+                build = ":TSUpdate",
+                ensure_installed = { "lua", "python", "typescript" }
             }
         },
-        { 'tpope/vim-fugitive' },
-        { 'ThePrimeagen/harpoon' },
+        { "tpope/vim-fugitive" },
+        { "ThePrimeagen/harpoon" },
 
         -- Trying out
-        { 'echasnovski/mini.nvim', version = false },
-        { 'folke/snacks.nvim', 
+        { "echasnovski/mini.nvim", version = false },
+        { "folke/snacks.nvim", 
             priority = 1000,
             lazy = false,
             ---@type snacks.Config
@@ -66,54 +66,73 @@ require('lazy').setup({
                 input = { enabled = true },
                 lazygit = { enabled = true },
                 picker = { enabled = true },
+                notifier = {
+                    enabled = true,
+                    timeout = 3000,
+                },
             },
             matchers = {
                 frecency = true,
             },
             keys = {
-                { '<leader>lg', function() Snacks.lazygit.open() end, desc = 'Open Lazygit' },
-                { '<leader><space>', function() Snacks.picker.smart() end, desc = 'Smart Find Files' },
-                { '<leader>gs', function() Snacks.picker.git_status() end, desc = 'Git Status' },
-                { '<leader>fp', function() Snacks.picker.projects() end, desc = 'Projects' },
-                { '<leader>sB', function() Snacks.picker.grep_buffers() end, desc = 'Grep Open Buffers' },
-                { '<leader>/', function() Snacks.picker.grep() end, desc = 'Grep' },
+                { "<leader>lg", function() Snacks.lazygit.open() end, desc = "Open Lazygit" },
+                { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+                { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+                { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
+                { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+                { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+                { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
             }
-        }
+        },
+        {
+            "folke/flash.nvim",
+            event = "VeryLazy",
+            ---@type Flash.Config
+            opts = {},
+            -- stylua: ignore
+            keys = {
+                { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+                { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+                { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+                { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+                { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+            }
+      }
     }
 })
-require('lualine').setup({
+require("lualine").setup({
   options = {
     icons_enabled = true,
-    theme = 'tokyonight-night',
-    component_separators = '',
-    section_separators = '',
+    theme = "tokyonight-night",
+    component_separators = "",
+    section_separators = "",
     disabled_filetypes = {},
     always_divide_middle = true,
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+    lualine_a = {"mode"},
+    lualine_b = {"branch", "diff", "diagnostics"},
+    lualine_c = {"filename"},
+    lualine_x = {"encoding", "fileformat", "filetype"},
+    lualine_y = {"progress"},
+    lualine_z = {"location"}
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
+    lualine_c = {"filename"},
+    lualine_x = {"location"},
     lualine_y = {},
     lualine_z = {}
   },
   --tabline = {},
   --extensions = {}
 })
-require('bufferline').setup({
+require("bufferline").setup({
     options = {
         numbers = function(opts)
-            return string.format('%s',opts.id)
+            return string.format("%s",opts.id)
         end,
     },
 })
-vim.cmd.colorscheme('tokyonight-night')
+vim.cmd.colorscheme("tokyonight-night")
