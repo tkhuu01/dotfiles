@@ -18,6 +18,7 @@ python = "3.11.12"
 node = "24.0.0"
 cosign = "latest"
 sops = "3.10.2"
+"aqua:jorgerojas26/lazysql" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["python"]

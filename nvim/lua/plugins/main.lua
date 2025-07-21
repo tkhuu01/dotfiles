@@ -4,17 +4,28 @@ require("lazy").setup({
         { "nvim-lua/plenary.nvim" },
 
         { "airblade/vim-rooter" },
-        { "akinsho/bufferline.nvim" },
+        {
+            "akinsho/bufferline.nvim",
+            opts = {
+                options = {
+                    numbers = "buffer_id"
+                },
+            }
+        },
         {
             "folke/tokyonight.nvim",
             lazy = false,
             priority = 1000,
+            styles = {
+                sidebars = "transparent",
+                floats = "transparent",
+            },
             opts = {
                 on_highlights = function(hl, colors)
-                    hl.WinSeparator = { fg = colors.red }
-                    hl.LineNrAbove = { fg = colors.white, bold = true }
-                    hl.LineNr = { fg = colors.white, bold = true }
-                    hl.LineNrBelow = { fg = colors.white, bold = true }
+                    hl.WinSeparator = { fg = colors.blue }
+                    hl.LineNrAbove = { fg = "#878787" }
+                    hl.LineNr = { fg = "#D3D3D3" }
+                    hl.LineNrBelow = { fg = "#878787" }
                 end,
             },
         },
@@ -51,7 +62,8 @@ require("lazy").setup({
             build = ":TSUpdate",
             config = function()
             require("nvim-treesitter.configs").setup({
-                ensure_installed = { "lua", "python", "typescript", "tsx" },
+                ensure_installed = { "lua", "python", "typescript", "tsx", "bash" },
+                sync_install = true,
                 auto_install = true,
                 highlight = { enable = true },
                 indent = { enable = true },
@@ -60,10 +72,9 @@ require("lazy").setup({
         },
         { "tpope/vim-fugitive" },
         { "ThePrimeagen/harpoon" },
-
-        -- Trying out
         { "echasnovski/mini.nvim", version = false },
-        { "folke/snacks.nvim", 
+        {
+            "folke/snacks.nvim",
             priority = 1000,
             lazy = false,
             ---@type snacks.Config
@@ -102,7 +113,29 @@ require("lazy").setup({
                 { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
                 { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
             }
-      }
+        },
+        {
+            "folke/lazydev.nvim",
+            ft = "lua", -- only load on lua files
+            opts = {
+                library = {
+                    -- See the configuration section for more details
+                    -- Load luvit types when the `vim.uv` word is found
+                    { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                    { path = "snacks.nvim", words = { "Snacks" } },
+                },
+            },
+        },
+        {
+            "hrsh7th/nvim-cmp",
+            opts = function(_, opts)
+                opts.sources = opts.sources or {}
+                table.insert(opts.sources, {
+                    name = "lazydev",
+                    group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+                })
+            end,
+        }
     }
 })
 require("lualine").setup({
@@ -132,12 +165,5 @@ require("lualine").setup({
   },
   --tabline = {},
   --extensions = {}
-})
-require("bufferline").setup({
-    options = {
-        numbers = function(opts)
-            return string.format("%s",opts.id)
-        end,
-    },
 })
 vim.cmd.colorscheme("tokyonight-night")
