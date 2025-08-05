@@ -3,7 +3,7 @@ require("lazy").setup({
     spec = {
         { "nvim-lua/plenary.nvim" },
 
-        { "airblade/vim-rooter" },
+
         {
             "akinsho/bufferline.nvim",
             opts = {
@@ -43,14 +43,22 @@ require("lazy").setup({
         {
             "mason-org/mason-lspconfig.nvim",
             opts = {
-                ensure_installed = { "pyright", "ts_ls" }
+                ensure_installed = { "pyright", "ts_ls", "clangd", "lua_ls" }
             },
             dependencies = {
                 { "mason-org/mason.nvim", opts = {} },
                 "neovim/nvim-lspconfig",
             },
         },
-        { "nvim-lualine/lualine.nvim" },
+        {
+            "nvim-lualine/lualine.nvim",
+            opts = {
+                options = {
+                    component_separators = "",
+                    section_separators = "",
+                }
+            }
+        },
         {
             "nvim-telescope/telescope-project.nvim",
             dependencies = {
@@ -71,7 +79,10 @@ require("lazy").setup({
             end,
         },
         { "tpope/vim-fugitive" },
-        { "ThePrimeagen/harpoon" },
+        {
+            "ThePrimeagen/harpoon",
+            branch = "harpoon2",
+        },
         { "echasnovski/mini.nvim", version = false },
         {
             "folke/snacks.nvim",
@@ -79,6 +90,7 @@ require("lazy").setup({
             lazy = false,
             ---@type snacks.Config
             opts = {
+                bufdelete = { enabled = true },
                 input = { enabled = true },
                 lazygit = { enabled = true },
                 picker = { enabled = true },
@@ -86,6 +98,7 @@ require("lazy").setup({
                     enabled = true,
                     timeout = 3000,
                 },
+                terminal = { enabled = true },
             },
             matchers = {
                 frecency = true,
@@ -95,9 +108,11 @@ require("lazy").setup({
                 { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
                 { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
                 { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
-                { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+                { "<leader>fp", function() Snacks.picker.projects({ dev = {"~/SFP", "~/dotfiles"} }) end, desc = "Projects" },
                 { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
                 { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+                { "<c-t>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
+                { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" }
             }
         },
         {
@@ -137,33 +152,5 @@ require("lazy").setup({
             end,
         }
     }
-})
-require("lualine").setup({
-  options = {
-    icons_enabled = true,
-    theme = "tokyonight-night",
-    component_separators = "",
-    section_separators = "",
-    disabled_filetypes = {},
-    always_divide_middle = true,
-  },
-  sections = {
-    lualine_a = {"mode"},
-    lualine_b = {"branch", "diff", "diagnostics"},
-    lualine_c = {"filename"},
-    lualine_x = {"encoding", "fileformat", "filetype"},
-    lualine_y = {"progress"},
-    lualine_z = {"location"}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {"filename"},
-    lualine_x = {"location"},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  --tabline = {},
-  --extensions = {}
 })
 vim.cmd.colorscheme("tokyonight-night")

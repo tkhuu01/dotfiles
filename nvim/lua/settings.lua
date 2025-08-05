@@ -33,6 +33,8 @@ vim.opt.listchars = {
     nbsp = "+"
 }
 
+vim.opt.autoread = true
+
 -- Mappings
 ----------------------------------------------------------------------
 
@@ -55,6 +57,33 @@ vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 
+-- buffer splitting
+vim.keymap.set("n", "<leader>vb", function()
+    local count = vim.v.count
+    if count > 0 then
+        vim.cmd('vs | b' .. count)
+    else
+        -- If no count provided, show buffer list and ask for input
+        vim.cmd('ls')
+        local buffer_number = tonumber(vim.fn.input('Vertical split buffer number: '))
+        if buffer_number and buffer_number > 0 then
+            vim.cmd('vs | b' .. buffer_number)
+        end
+    end
+end)
+vim.keymap.set("n", "<leader>sb", function()
+    local count = vim.v.count
+    if count > 0 then
+        vim.cmd('sp | b' .. count)
+    else
+        -- If no count provided, show buffer list and ask for input
+        vim.cmd('ls')
+        local buffer_number = tonumber(vim.fn.input('Horizontal split buffer number: '))
+        if buffer_number and buffer_number > 0 then
+            vim.cmd('sp | b' .. buffer_number)
+        end
+    end
+end)
 -- telescope
 --vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 --vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
