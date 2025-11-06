@@ -97,6 +97,9 @@ if vim.fn.exists(":DiffOrig") == 0 then
     vim.keymap.set("n", ":DO", ":DiffOrig", { noremap = true })
 end
 
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
 -- Autocmd
 ----------------------------------------------------------------------
 
