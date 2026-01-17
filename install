@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Ubuntu 20+ installation
 set -ex
 
 # version manager
@@ -9,8 +10,9 @@ if ! command -v mise &> /dev/null; then
 else
     echo "Mise already installed"
 fi
-# mise can't seem to figure out the dependency ordering
-mise use -g python@3.11.12 && mise use -g node@24.0.0 && mise use -g cosign@latest
+# mise can't seem to figure out the dependency ordering so these
+# need to be separate from the file
+mise use -g python@3.11.12 && mise use -g node@24.0.0 && mise use -g cosign@latest && mise use -g pipx@1.8.0
 mise install
 
 CONFIG="install.conf.yaml"
@@ -25,22 +27,17 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 
-# neovim alias
-if ! grep -Fxq "alias vi='nvim'" ~/.bashrc; then
-    echo "alias vi='nvim'" >> ~/.bashrc
-fi
-
 # tmux plugin setup
-if [ ! -d "~/.tmux/plugins/tpm" ]; then
+if [ ! -d ~/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
     echo "TPM already installed"
 fi
 
-if [ ! -f "~/.git-templates/hooks/commit-msg" ]; then
+if [ ! -f ~/.git-templates/hooks/commit-msg ]; then
     git config --global init.templatedir "~/.git-templates"
     mkdir -p ~/.git-templates/hooks
-    cat > ~/.git-templates/hooks/commit-msg <<EOF
+    cat > ~/.git-templates/hooks/commit-msg <<'EOF'
 #!/bin/sh
 JIRA_TICKET=$(git symbolic-ref --short HEAD | grep -oE '^[A-Z]+-[0-9]+')
 if [ ! -z "$JIRA_TICKET" ]; then
@@ -48,4 +45,29 @@ if [ ! -z "$JIRA_TICKET" ]; then
     echo "$JIRA_TICKET $COMMIT_MSG" > $1
 fi
 EOF
-if
+    chmod +x ~/.git-templates/hooks/commit-msg
+fi
+
+sudo apt update && sudo apt install xclip unzip libasound2t64 libnss3 libxss1 libgbm-dev
+
+
+# Bashrc aliases
+# ------------------------------------------------------------------------------
+echo "alias v='nvim'" >> ~/.bashrc
+echo "alias vi='nvim'" >> ~/.bashrc
+cat >> ~/.bashrc <<'EOF'
+function dockerexec() {
+    docker exec -it "$1" /bin/bash
+}
+alias dockerexec='dockerexec'
+function klog() {
+    stern -t "$1" | grep -v health
+}
+alias klog='klog'
+TERM=tmux-256color
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+PS1='\[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '
+bind 'set bell-style none'
+EOF

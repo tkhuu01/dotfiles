@@ -3,9 +3,11 @@
       force: true
       path: tmux.conf
     ~/.config/nvim/init.lua:
+      create: true
       force: true
       path: nvim/init.lua
     ~/.config/nvim/lua:
+      create: true
       force: true
       path: nvim/lua
     ~/.config/mise/config.toml:

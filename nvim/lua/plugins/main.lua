@@ -68,15 +68,16 @@ require("lazy").setup({
         {
             "nvim-treesitter/nvim-treesitter",
             build = ":TSUpdate",
-            config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = { "lua", "python", "typescript", "tsx", "bash" },
-                sync_install = true,
+            opts = {
+                ensure_installed = { "lua", "python", "tsx", "bash" },
                 auto_install = true,
                 highlight = { enable = true },
                 indent = { enable = true },
-            })
+            },
+            config = function(_, opts)
+                require("nvim-treesitter.config").setup(opts)
             end,
+
         },
         { "tpope/vim-fugitive" },
         {
@@ -113,7 +114,7 @@ require("lazy").setup({
                 { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
                 { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
                 { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
-                { "<leader>fp", function() Snacks.picker.projects({ dev = {"~/SFP", "~/dotfiles"} }) end, desc = "Projects" },
+                { "<leader>fp", function() Snacks.picker.projects({ dev = {"~/projects", "~/dotfiles"} }) end, desc = "Projects" },
                 { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
                 { "<c-t>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
 
