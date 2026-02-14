@@ -48,7 +48,7 @@ EOF
     chmod +x ~/.git-templates/hooks/commit-msg
 fi
 
-sudo apt update && sudo apt install xclip unzip libasound2t64 libnss3 libxss1 libgbm-dev
+sudo apt update && sudo apt install xclip unzip libasound2t64 libnss3 libxss1 libgbm-dev build-essential
 
 
 # Bashrc aliases

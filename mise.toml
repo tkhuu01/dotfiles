@@ -19,7 +19,9 @@ cosign = "latest"
 sops = "3.10.2"
 python = "3.11.12"
 pipx = "1.8.0"
-#"aqua:docker/cli" = "28.5.1"
+"npm:tree-sitter-cli" = "latest"
+"aqua:docker/cli" = "29.2.0"
+"aqua:docker/compose" = "5.0.2"
 
 [settings]
 idiomatic_version_file_enable_tools = ["python"]

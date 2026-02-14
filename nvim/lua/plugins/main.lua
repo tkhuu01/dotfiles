@@ -3,15 +3,6 @@ require("lazy").setup({
     spec = {
         { "nvim-lua/plenary.nvim" },
 
-
-        {
-            "akinsho/bufferline.nvim",
-            opts = {
-                options = {
-                    numbers = "buffer_id"
-                },
-            }
-        },
         {
             "folke/tokyonight.nvim",
             lazy = false,
@@ -69,7 +60,7 @@ require("lazy").setup({
             "nvim-treesitter/nvim-treesitter",
             build = ":TSUpdate",
             opts = {
-                ensure_installed = { "lua", "python", "tsx", "bash" },
+                ensure_installed = { "lua", "python", "tsx", "bash", "typescript", "typescriptreact" },
                 auto_install = true,
                 highlight = { enable = true },
                 indent = { enable = true },
@@ -107,14 +98,19 @@ require("lazy").setup({
                 cwd_bonus = true
             },
             file = {
-                min_width = 60
+                min_width = 60,
+                hidden = true
             },
             keys = {
                 { "<leader>lg", function() Snacks.lazygit.open() end, desc = "Open Lazygit" },
                 { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
                 { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+                { "<leader>fp", function() Snacks.picker.projects({ dev = {"~/dotfiles"} }) end, desc = "Projects" },
+                -- Git
+                { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "Git Branches" },
+                { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
                 { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
-                { "<leader>fp", function() Snacks.picker.projects({ dev = {"~/projects", "~/dotfiles"} }) end, desc = "Projects" },
+
                 { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
                 { "<c-t>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
 
