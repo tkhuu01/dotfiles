@@ -115,7 +115,7 @@ require("lazy").setup({
                 { "<c-t>", function() Snacks.terminal() end, desc = "Toggle Terminal" },
 
                 { "<leader>,", function() Snacks.picker.buffers() end, desc = "Buffers" },
-                { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+                { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
                 { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
 
                 -- LSP
@@ -163,6 +163,19 @@ require("lazy").setup({
                     group_index = 0, -- set group index to 0 to skip loading LuaLS completions
                 })
             end,
+        },
+        {
+            'stevearc/oil.nvim',
+            ---@module 'oil'
+            ---@type oil.SetupOpts
+            opts = {
+                view_options = {
+                    show_hidden = true
+                }
+            },
+            dependencies = { "nvim-tree/nvim-web-devicons" },
+            -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+            lazy = false,
         }
     }
 })
