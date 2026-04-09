@@ -12,11 +12,15 @@ require("lazy").setup({
                 floats = "transparent",
             },
             opts = {
+                on_colors = function(colors)
+                    colors.comment = "#9aa5ce"
+                end,
                 on_highlights = function(hl, colors)
                     hl.WinSeparator = { fg = colors.blue }
                     hl.LineNrAbove = { fg = "#878787" }
                     hl.LineNr = { fg = "#D3D3D3" }
                     hl.LineNrBelow = { fg = "#878787" }
+                    hl.DiagnosticUnnecessary = { fg = colors.comment, italic = true }
                 end,
             },
         },
