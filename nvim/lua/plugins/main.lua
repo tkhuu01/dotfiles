@@ -23,6 +23,9 @@ require("lazy").setup({
                     hl.DiagnosticUnnecessary = { fg = colors.comment, italic = true }
                 end,
             },
+            config = function()
+                vim.cmd.colorscheme("tokyonight-night")
+            end,
         },
         { "folke/trouble.nvim" },
         {
@@ -72,14 +75,21 @@ require("lazy").setup({
             config = function(_, opts)
                 require("nvim-treesitter.config").setup(opts)
             end,
-
         },
         { "tpope/vim-fugitive" },
         {
             "ThePrimeagen/harpoon",
             branch = "harpoon2",
         },
-        { "echasnovski/mini.nvim", version = false },
+        {
+            "echasnovski/mini.nvim",
+            version = false,
+            config = function()
+                require("mini.completion").setup()
+                require("mini.icons").setup()
+                require("mini.snippets").setup()
+            end
+        },
         {
             "folke/snacks.nvim",
             priority = 1000,
@@ -160,6 +170,11 @@ require("lazy").setup({
         },
         {
             "hrsh7th/nvim-cmp",
+            dependencies = {
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-buffer",
+                "hrsh7th/cmp-path"
+            },
             opts = function(_, opts)
                 opts.sources = opts.sources or {}
                 table.insert(opts.sources, {
@@ -180,7 +195,40 @@ require("lazy").setup({
             dependencies = { "nvim-tree/nvim-web-devicons" },
             -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
             lazy = false,
+        },
+        {
+            "rachartier/tiny-inline-diagnostic.nvim",
+            event = "VeryLazy",
+            priority = 1000,
+            opts = {
+                add_messages = {
+                    display_count = true,
+                },
+                multilines = {
+                    enabled = true,
+                    always_show = true,
+                },
+                show_all_diags_on_cursorline = true
+            },
+            keys = {
+                { "<leader>de", "<cmd>TinyInlineDiag enable<cr>", desc = "Enable diagnostics" },
+                { "<leader>dd", "<cmd>TinyInlineDiag disable<cr>", desc = "Disable diagnostics" },
+                { "<leader>dt", "<cmd>TinyInlineDiag toggle<cr>", desc = "Toggle diagnostics" },
+                { "<leader>dc", "<cmd>TinyInlineDiag toggle_cursor_only<cr>", desc = "Toggle cursor-only diagnostics" },
+            },
+            config = function()
+                require("tiny-inline-diagnostic").setup()
+                vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+            end,
+        },
+        {
+            "stevearc/conform.nvim",
+            opts = {
+                formatters_by_ft = {
+                    python = { "isort", "black", "ruff" },
+                    typescript = { "prettier" }
+                }
+            },
         }
     }
 })
-vim.cmd.colorscheme("tokyonight-night")

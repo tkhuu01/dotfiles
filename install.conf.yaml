@@ -10,6 +10,10 @@
       create: true
       force: true
       path: nvim/lua
+    ~/.config/nvim/lazy-lock.json:
+      create: true
+      force: true
+      path: nvim/lazy-lock.json
     ~/.config/mise/config.toml:
       force: true
       path: mise.toml
