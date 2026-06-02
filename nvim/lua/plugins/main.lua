@@ -1,4 +1,3 @@
--- Plugin installations
 require("lazy").setup({
     spec = {
         { "nvim-lua/plenary.nvim" },
@@ -13,7 +12,7 @@ require("lazy").setup({
             },
             opts = {
                 on_colors = function(colors)
-                    colors.comment = "#9aa5ce"
+                    colors.comment = "#7dcfff"
                 end,
                 on_highlights = function(hl, colors)
                     hl.WinSeparator = { fg = colors.blue }
@@ -23,7 +22,8 @@ require("lazy").setup({
                     hl.DiagnosticUnnecessary = { fg = colors.comment, italic = true }
                 end,
             },
-            config = function()
+            config = function(_, opts)
+                require("tokyonight").setup(opts)
                 vim.cmd.colorscheme("tokyonight-night")
             end,
         },
@@ -169,19 +169,11 @@ require("lazy").setup({
             },
         },
         {
-            "hrsh7th/nvim-cmp",
-            dependencies = {
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path"
-            },
-            opts = function(_, opts)
-                opts.sources = opts.sources or {}
-                table.insert(opts.sources, {
-                    name = "lazydev",
-                    group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-                })
-            end,
+            'saghen/blink.cmp',
+            version = '1.*',
+            ---@module 'blink.cmp'
+            ---@type blink.cmp.Config
+            opts = {}
         },
         {
             'stevearc/oil.nvim',
