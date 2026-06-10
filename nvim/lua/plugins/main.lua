@@ -2,14 +2,34 @@ require("lazy").setup({
     spec = {
         { "nvim-lua/plenary.nvim" },
 
+        --{
+        --    "folke/tokyonight.nvim",
+        --    lazy = false,
+        --    priority = 1000,
+        --    styles = {
+        --        sidebars = "transparent",
+        --        floats = "transparent",
+        --    },
+        --    opts = {
+        --        on_colors = function(colors)
+        --            colors.comment = "#7dcfff"
+        --        end,
+        --        on_highlights = function(hl, colors)
+        --            hl.WinSeparator = { fg = colors.blue }
+        --            hl.LineNrAbove = { fg = "#878787" }
+        --            hl.LineNr = { fg = "#D3D3D3" }
+        --            hl.LineNrBelow = { fg = "#878787" }
+        --            hl.DiagnosticUnnecessary = { fg = colors.comment, italic = true }
+        --        end,
+        --    },
+        --    config = function(_, opts)
+        --        require("tokyonight").setup(opts)
+        --        vim.cmd.colorscheme("tokyonight-night")
+        --    end,
+        --},
         {
-            "folke/tokyonight.nvim",
-            lazy = false,
+            "ellisonleao/gruvbox.nvim",
             priority = 1000,
-            styles = {
-                sidebars = "transparent",
-                floats = "transparent",
-            },
             opts = {
                 on_colors = function(colors)
                     colors.comment = "#7dcfff"
@@ -23,9 +43,10 @@ require("lazy").setup({
                 end,
             },
             config = function(_, opts)
-                require("tokyonight").setup(opts)
-                vim.cmd.colorscheme("tokyonight-night")
-            end,
+                require("gruvbox").setup(opts)
+                vim.o.background = "dark"
+                vim.cmd.colorscheme("gruvbox")
+            end
         },
         { "folke/trouble.nvim" },
         {
@@ -58,12 +79,6 @@ require("lazy").setup({
             }
         },
         {
-            "nvim-telescope/telescope-project.nvim",
-            dependencies = {
-                "nvim-telescope/telescope.nvim",
-            },
-        },
-        {
             "nvim-treesitter/nvim-treesitter",
             build = ":TSUpdate",
             opts = {
@@ -80,6 +95,23 @@ require("lazy").setup({
         {
             "ThePrimeagen/harpoon",
             branch = "harpoon2",
+            opts = {
+                settings = {
+                    save_on_toggle = true
+                }
+            },
+            config = function(_, opts)
+                require("harpoon").setup(opts)
+            end,
+            keys = {
+                { "<leader>a", function() require("harpoon"):list():add() end, desc = "Harpoon add file" },
+                { "<leader>e", function() local h = require("harpoon") h.ui:toggle_quick_menu(h:list()) end, desc = "Harpoon quick menu" },
+                { "<leader>1", function() require("harpoon"):list():select(1) end, desc = "Harpoon 1" },
+                { "<leader>2", function() require("harpoon"):list():select(2) end, desc = "Harpoon 2" },
+                { "<leader>3", function() require("harpoon"):list():select(3) end, desc = "Harpoon 3" },
+                { "<leader>4", function() require("harpoon"):list():select(4) end, desc = "Harpoon 4" },
+                { "<leader>5", function() require("harpoon"):list():select(5) end, desc = "Harpoon 5" },
+            },
         },
         {
             "echasnovski/mini.nvim",
@@ -219,8 +251,20 @@ require("lazy").setup({
                 formatters_by_ft = {
                     python = { "isort", "black", "ruff" },
                     typescript = { "prettier" }
+                },
+                formatters = {
+                    isort = { require_cwd = true },
+                    black = { require_cwd = true },
+                    ruff = { require_cwd = true },
+                    prettier = { require_cwd = true }
                 }
-            },
+            }
         }
     }
+})
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function(args)
+        require("conform").format({ bufnr = args.buf })
+    end,
 })

@@ -18,7 +18,6 @@ eval "$(~/.local/bin/mise activate bash)"
 # mise can't seem to figure out the dependency ordering so these
 # need to be separate from the file
 mise use -g python@3.11.12 && mise use -g node@24.0.0 && mise use -g cosign@latest && mise use -g pipx@1.8.0
-mise install
 
 CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
@@ -76,3 +75,5 @@ parse_git_branch() {
 PS1='\[\033[32m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\] $ '
 bind 'set bell-style none'
 EOF
+
+mise install
