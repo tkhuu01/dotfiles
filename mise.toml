@@ -1,6 +1,6 @@
 # Global configs
 [tools]
-neovim = "0.11.2"
+"aqua:neovim" = "v0.12.2"
 ripgrep = "14.1.1"
 tmux = "3.6a"
 uv = "0.11.7"
