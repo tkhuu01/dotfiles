@@ -80,15 +80,16 @@ require("lazy").setup({
         },
         {
             "nvim-treesitter/nvim-treesitter",
+            branch = "master",
             build = ":TSUpdate",
             opts = {
-                ensure_installed = { "lua", "python", "tsx", "bash", "typescript", "typescriptreact" },
+                ensure_installed = { "lua", "python", "tsx", "bash", "typescript" },
                 auto_install = true,
                 highlight = { enable = true },
                 indent = { enable = true },
             },
             config = function(_, opts)
-                require("nvim-treesitter.config").setup(opts)
+                require("nvim-treesitter.configs").setup(opts)
             end,
         },
         { "tpope/vim-fugitive" },
@@ -105,7 +106,7 @@ require("lazy").setup({
             end,
             keys = {
                 { "<leader>a", function() require("harpoon"):list():add() end, desc = "Harpoon add file" },
-                { "<leader>e", function() local h = require("harpoon") h.ui:toggle_quick_menu(h:list()) end, desc = "Harpoon quick menu" },
+                { "<leader>h", function() local h = require("harpoon") h.ui:toggle_quick_menu(h:list()) end, desc = "Harpoon quick menu" },
                 { "<leader>1", function() require("harpoon"):list():select(1) end, desc = "Harpoon 1" },
                 { "<leader>2", function() require("harpoon"):list():select(2) end, desc = "Harpoon 2" },
                 { "<leader>3", function() require("harpoon"):list():select(3) end, desc = "Harpoon 3" },
