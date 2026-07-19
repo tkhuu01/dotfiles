@@ -80,16 +80,17 @@ require("lazy").setup({
         },
         {
             "nvim-treesitter/nvim-treesitter",
-            branch = "master",
+            branch = "main",
+            lazy = false,
             build = ":TSUpdate",
-            opts = {
-                ensure_installed = { "lua", "python", "tsx", "bash", "typescript" },
-                auto_install = true,
-                highlight = { enable = true },
-                indent = { enable = true },
-            },
-            config = function(_, opts)
-                require("nvim-treesitter.configs").setup(opts)
+            config = function()
+                require("nvim-treesitter").install({ "lua", "python", "tsx", "bash", "typescript" })
+                vim.api.nvim_create_autocmd("FileType", {
+                    pattern = { "lua", "python", "typescript", "typescriptreact", "sh", "bash" },
+                    callback = function(args)
+                        pcall(vim.treesitter.start, args.buf)
+                    end,
+                })
             end,
         },
         { "tpope/vim-fugitive" },
