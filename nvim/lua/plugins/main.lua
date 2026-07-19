@@ -84,11 +84,14 @@ require("lazy").setup({
             lazy = false,
             build = ":TSUpdate",
             config = function()
-                require("nvim-treesitter").install({ "lua", "python", "tsx", "bash", "typescript", "v" })
+                local ts = require("nvim-treesitter")
                 vim.api.nvim_create_autocmd("FileType", {
-                    pattern = { "lua", "python", "typescript", "typescriptreact", "sh", "bash", "v" },
                     callback = function(args)
-                        pcall(vim.treesitter.start, args.buf)
+                        local lang = vim.treesitter.language.get_lang(args.match)
+                        if not lang then return end
+                        ts.install(lang):await(function()
+                            pcall(vim.treesitter.start, args.buf)
+                        end)
                     end,
                 })
             end,
