@@ -125,6 +125,7 @@ require("lazy").setup({
                 require("mini.completion").setup()
                 require("mini.icons").setup()
                 require("mini.snippets").setup()
+                require("mini.surround").setup()
             end
         },
         {
@@ -252,18 +253,44 @@ require("lazy").setup({
         },
         {
             "stevearc/conform.nvim",
-            opts = {
-                formatters_by_ft = {
-                    python = { "isort", "black", "ruff" },
-                    typescript = { "prettier" }
-                },
-                formatters = {
-                    isort = { require_cwd = true },
-                    black = { require_cwd = true },
-                    ruff = { require_cwd = true },
-                    prettier = { require_cwd = true }
+            opts = function()
+                local util = require("conform.util")
+
+                local project_root = util.root_file({
+                    "pyproject.toml",
+                    "ruff.toml",
+                    ".ruff.toml",
+                    "package.json",
+                    ".git",
+                })
+
+                return {
+                    formatters_by_ft = {
+                        python = { "isort", "black", "ruff_format" },
+                        typescript = { "prettier" },
+                        typescriptreact = { "prettier" },
+                    },
+
+                    formatters = {
+                        isort = {
+                            cwd = project_root,
+                            require_cwd = true,
+                        },
+                        black = {
+                            cwd = project_root,
+                            require_cwd = true,
+                        },
+                        ruff_format = {
+                            cwd = project_root,
+                            require_cwd = true,
+                        },
+                        prettier = {
+                            cwd = project_root,
+                            require_cwd = true,
+                        },
+                    },
                 }
-            }
+            end,
         }
     }
 })

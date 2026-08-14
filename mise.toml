@@ -24,6 +24,8 @@ pipx = "1.8.0"
 "aqua:docker/compose" = "5.0.2"
 jq = "1.8.1"
 rust = "1.95"
+herdr = "0.7.5"
+yq = "4.53.2"
 
 [settings]
 idiomatic_version_file_enable_tools = ["python"]
