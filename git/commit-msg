@@ -1,0 +1,6 @@
+#!/bin/sh
+JIRA_TICKET=$(git symbolic-ref --short HEAD | grep -oE '^[A-Z]+-[0-9]+')
+if [ ! -z "$JIRA_TICKET" ]; then
+    COMMIT_MSG=$(cat $1)
+    echo "$JIRA_TICKET $COMMIT_MSG" > $1
+fi

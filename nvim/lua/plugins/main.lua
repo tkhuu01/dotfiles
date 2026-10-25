@@ -62,7 +62,7 @@ require("lazy").setup({
         {
             "mason-org/mason-lspconfig.nvim",
             opts = {
-                ensure_installed = { "pyright", "ts_ls", "clangd", "lua_ls" }
+                ensure_installed = { "pyrefly", "ts_ls", "clangd", "lua_ls" }
             },
             dependencies = {
                 { "mason-org/mason.nvim", opts = {} },
@@ -211,7 +211,14 @@ require("lazy").setup({
             version = '1.*',
             ---@module 'blink.cmp'
             ---@type blink.cmp.Config
-            opts = {}
+            opts = {
+                completion = {
+                    ghost_text = {
+                        enabled = true,
+                        show_with_menu = true
+                    }
+                }
+            }
         },
         {
             'stevearc/oil.nvim',

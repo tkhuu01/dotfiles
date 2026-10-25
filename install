@@ -1,79 +1,48 @@
 #!/usr/bin/env bash
-
-# Ubuntu 20+ installation
 set -ex
 
-# version manager
-if ! command -v mise &> /dev/null; then
-    curl https://mise.run | sh
-    echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
-else
-    echo "Mise already installed"
+if ! command -v mise >/dev/null 2>&1; then
+    for arg in "$@"; do
+        case "$arg" in
+            -n|--dry-run|--help|-h)
+                printf '%s\n' 'Install mise first: https://mise.jdx.dev/getting-started.html' >&2
+                exit 1
+                ;;
+        esac
+    done
+    curl -fsSL https://mise.run | sh
 fi
 
-# Activate mise for the current script session
-export PATH="$HOME/.local/bin:$PATH"
-eval "$(~/.local/bin/mise activate bash)"
+mise trust
+for arg in "$@"; do
+    case "$arg" in
+        -n|--dry-run|-h|--help)
+            exec mise bootstrap "$@"
+            ;;
+    esac
+done
+mise bootstrap "$@"
 
-# mise can't seem to figure out the dependency ordering so these
-# need to be separate from the file
-mise use -g python@3.11.12 && mise use -g node@24.0.0 && mise use -g cosign@latest && mise use -g pipx@1.8.0
+# Bash aliases, functions, and prompt.
+cat >> ~/.bashrc <<'DOTFILES_SHELL'
+alias v='nvim'
+alias vi='nvim'
 
-CONFIG="install.conf.yaml"
-DOTBOT_DIR="dotbot"
-
-DOTBOT_BIN="bin/dotbot"
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
-
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
-# tmux plugin setup
-if [ ! -d ~/.tmux/plugins/tpm ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-else
-    echo "TPM already installed"
-fi
-
-if [ ! -f ~/.git-templates/hooks/commit-msg ]; then
-    git config --global init.templatedir "~/.git-templates"
-    mkdir -p ~/.git-templates/hooks
-    cat > ~/.git-templates/hooks/commit-msg <<'EOF'
-#!/bin/sh
-JIRA_TICKET=$(git symbolic-ref --short HEAD | grep -oE '^[A-Z]+-[0-9]+')
-if [ ! -z "$JIRA_TICKET" ]; then
-    COMMIT_MSG=$(cat $1)
-    echo "$JIRA_TICKET $COMMIT_MSG" > $1
-fi
-EOF
-    chmod +x ~/.git-templates/hooks/commit-msg
-fi
-
-sudo apt update && sudo apt install -y xclip unzip libasound2t64 libnss3 libxss1 libgbm-dev build-essential
-
-
-# Bashrc aliases
-# ------------------------------------------------------------------------------
-echo "alias v='nvim'" >> ~/.bashrc
-echo "alias vi='nvim'" >> ~/.bashrc
-cat >> ~/.bashrc <<'EOF'
-function dockerexec() {
+dockerexec() {
     docker exec -it "$1" /bin/bash
 }
-alias dockerexec='dockerexec'
-function klog() {
+
+klog() {
     stern -t "$1" | grep -v health
 }
-alias klog='klog'
-TERM=tmux-256color
+
+if [ -n "${TMUX:-}" ]; then
+    export TERM=tmux-256color
+fi
+
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 PS1='\[\033[32m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\] $ '
 bind 'set bell-style none'
-EOF
-
-mise install
+DOTFILES_SHELL
