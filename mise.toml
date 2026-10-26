@@ -66,3 +66,4 @@ run = 'bash "$HOME/dotfiles/scripts/bootstrap.sh"'
 [settings]
 idiomatic_version_file_enable_tools = ["python"]
 self_update.auto = true
+lockfile = true
