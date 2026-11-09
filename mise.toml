@@ -21,7 +21,7 @@ cosign = "latest"
 sops = "3.10.2"
 python = "3.13.3"
 pipx = { version = "1.8.0", depends = ["python"] }
-"npm:tree-sitter-cli" = { version = "latest", depends = ["node"] }
+"npm:tree-sitter-cli" = { version = "0.26.8", depends = ["node"] }
 "aqua:docker/cli" = "29.2.0"
 "aqua:docker/compose" = "5.0.2"
 jq = "1.8.1"
