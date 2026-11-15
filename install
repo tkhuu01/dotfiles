@@ -27,6 +27,7 @@ mise bootstrap "$@"
 cat >> ~/.bashrc <<'DOTFILES_SHELL'
 alias v='nvim'
 alias vi='nvim'
+alias g='git'
 
 dockerexec() {
     docker exec -it "$1" /bin/bash
